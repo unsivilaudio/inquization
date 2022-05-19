@@ -1,0 +1,26 @@
+{
+    "name": "inquization",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev:db": "mongod --dbpath=./data",
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "mongodb": "^4.6.0",
+        "mongoose": "^6.3.3",
+        "next": "12.1.5",
+        "next-auth": "^4.3.4",
+        "react": "18.0.0",
+        "react-dom": "18.0.0",
+        "sass": "^1.51.0"
+    },
+    "devDependencies": {
+        "eslint": "8.13.0",
+        "eslint-config-next": "12.1.5"
+    }
+}

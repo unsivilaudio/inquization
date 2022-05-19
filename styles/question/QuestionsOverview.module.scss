@@ -1,0 +1,98 @@
+.QuestionsOverview {
+    font-family: 'Lato';
+    max-width: 90rem;
+    margin: 0 auto;
+    margin-top: 2rem;
+    padding: 1.4rem 3.2rem;
+
+    .Header {
+        font-size: 3.2rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.7rem;
+    }
+
+    .Overview {
+        margin-top: 1.5rem;
+
+        .Title {
+            font-size: 2.6rem;
+            font-weight: 400;
+            font-style: italic;
+            text-transform: uppercase;
+        }
+
+        .QuestionList {
+            list-style: none;
+            margin-top: 1.2rem;
+
+            .QuestionItem {
+                margin-top: 1.5rem;
+                padding: 1.8rem 2.8rem;
+                padding-bottom: 2.4rem;
+
+                border: 1px solid var(--color-black);
+                border-radius: 0.7rem;
+
+                .Actions {
+                    font-size: 1.4rem;
+                    font-weight: 600;
+                    padding: 1rem 0;
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 1.5rem;
+
+                    .Edit,
+                    .Delete {
+                        padding: 0.7rem 1.4rem;
+                        cursor: pointer;
+                        border: 1px solid currentColor;
+                        border-radius: 0.7rem;
+                        transition: all 0.3s ease;
+                        &:hover {
+                            color: var(--color-white);
+                            border-color: transparent;
+                        }
+                    }
+
+                    .Edit {
+                        color: var(--button-primary-light);
+                        &:hover {
+                            background: var(--button-primary-dark);
+                        }
+                    }
+
+                    .Delete {
+                        color: var(--button-danger-light);
+                        &:hover {
+                            background: var(--button-danger-dark);
+                        }
+                    }
+                }
+
+                .Question {
+                    font-family: 'Open Sans';
+                    font-size: 2rem;
+                    text-justify: inter-word;
+                }
+
+                .Answers {
+                    list-style: none;
+
+                    .AnswerItem {
+                        margin-top: 1.5rem;
+                        background: var(--color-grey-light-1);
+                        border-radius: 1rem;
+                        padding: 1.2rem 2.5rem;
+                        font-size: 1.6rem;
+                        font-weight: 600;
+
+                        &:nth-child(even) {
+                            background: var(--color-grey-light-2);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

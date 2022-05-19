@@ -1,0 +1,41 @@
+.QuestionItem {
+    width: 100%;
+
+    .Question {
+        margin-top: 0.7rem;
+        font-size: 2rem;
+        font-style: italic;
+    }
+
+    .AnswerList {
+        margin-top: 1.5rem;
+
+        .Answer {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+
+            input {
+                flex-basis: 4rem;
+                &:focus-within {
+                    background: inherit;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+
+    .Actions {
+        margin-top: 1.5rem;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        gap: 2rem;
+
+        button {
+            padding: 0.7rem 2.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+    }
+}
