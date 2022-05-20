@@ -1,60 +1,58 @@
 import { useState, useRef } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import classes from '../../styles/auth/AuthForm.module.scss';
+
+import axios from '../../helpers/with-axios';
 import Button from '../ui/Button';
+import classes from '../../styles/auth/AuthForm.module.scss';
 
 async function createUser(email, password) {
-    const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-        headers: {
-            'Content-Type': 'application/json',
-        },
+    return await axios.post('/auth/signup', {
+        email,
+        password,
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new Error(data.message || 'something went wrong!');
-    }
-
-    return data;
 }
 
 function AuthForm() {
-    const emailInputRef = useRef();
-    const passwordInputRef = useRef();
-
     const [isLogin, setIsLogin] = useState(true);
-    const router = useRouter();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
 
     function switchAuthModeHandler() {
         setIsLogin(prevState => !prevState);
     }
 
+    function handleChangeEmail(e) {
+        setEmail(e.target.value);
+    }
+
+    function handleChangePassword(e) {
+        setPassword(e.target.value);
+    }
+
+    function handleChangePasswordConfirm(e) {
+        setPasswordConfirm(e.target.value);
+    }
+
     async function submitHandler(event) {
         event.preventDefault();
 
-        const enteredEmail = emailInputRef.current.value;
-        const enteredPassword = passwordInputRef.current.value;
+        if (!isLogin && password !== passwordConfirm) {
+            return;
+        }
 
-        if (isLogin) {
-            const result = await signIn('credentials', {
+        try {
+            if (!isLogin) {
+                await createUser(email, password);
+            }
+
+            await signIn('credentials', {
                 redirect: false,
-                email: enteredEmail,
-                password: enteredPassword,
+                email,
+                password,
             });
-            if (!result.error) {
-                router.replace('/profile');
-            }
-        } else {
-            try {
-                const result = await createUser(enteredEmail, enteredPassword);
-                console.log(result);
-            } catch (error) {
-                console.log(error);
-            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -70,7 +68,8 @@ function AuthForm() {
                         type='email'
                         id='email'
                         required
-                        ref={emailInputRef}
+                        onChange={handleChangeEmail}
+                        value={email}
                     />
                 </div>
                 <div className={classes.FormControl}>
@@ -79,9 +78,24 @@ function AuthForm() {
                         type='password'
                         id='password'
                         required
-                        ref={passwordInputRef}
+                        onChange={handleChangePassword}
+                        value={password}
                     />
                 </div>
+                {!isLogin && (
+                    <div className={classes.FormControl}>
+                        <label htmlFor='passwordConfirm'>
+                            Confirm Password
+                        </label>
+                        <input
+                            type='password'
+                            id='passwordConfirm'
+                            required
+                            onChange={handleChangePasswordConfirm}
+                            value={passwordConfirm}
+                        />
+                    </div>
+                )}
                 <div className={classes.Actions}>
                     <Button type='submit'>
                         {isLogin ? 'Login' : 'Create Account'}
@@ -91,7 +105,7 @@ function AuthForm() {
                         onClick={switchAuthModeHandler}>
                         {isLogin
                             ? 'Create new account'
-                            : 'Login with existing account'}
+                            : 'Already signed up? Switch to login'}
                     </p>
                 </div>
             </form>

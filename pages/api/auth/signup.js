@@ -1,5 +1,6 @@
 import { connectToDatabase } from '../../../lib/db';
 import { hashPassword } from '../../../lib/auth';
+import User from '../../../models/User';
 
 async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -24,27 +25,25 @@ async function handler(req, res) {
         return;
     }
 
-    const db = await connectToDatabase();
-    const Users = db.collection('users');
+    await connectToDatabase();
 
-    const existingUser = await Users.findOne({ email: email });
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
         res.status(422).json({ message: 'This email is already in use!' });
-        db.close();
 
         return;
     }
 
     const hashedPassword = await hashPassword(password);
 
-    const result = await Users.insertOne({
+    let user = await User.create({
         email: email,
         password: hashedPassword,
     });
+    user.password = undefined;
 
-    res.status(201).json({ message: 'Created User!' });
-    db.close();
+    res.status(201).json({ message: 'Created User!', user });
 }
 
 export default handler;

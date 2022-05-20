@@ -1,55 +1,46 @@
+import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+
+import axios from '../../helpers/with-axios';
 import QuizSearch from '../../components/quiz/QuizSearch';
 import QuizList from '../../components/quiz/QuizList';
 import Head from 'next/head';
 
 function Quiz() {
+    const router = useRouter();
     const [quizItems, setQuizItems] = useState([]);
     const [quizCategory, setQuizCategory] = useState('Featured');
     const [quizDifficulty, setQuizDifficulty] = useState('Easy');
 
     useEffect(() => {
-        fetch('/api/quiz', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(res => res.json())
-            .then(data => {
-                setQuizItems(data);
+        axios
+            .get('/quiz')
+            .then(res => {
+                setQuizItems(res.data);
+            })
+            .catch(err => {
+                console.log(err.message);
+                router.push('/auth');
             });
     }, []);
 
     function handleGetSearch(category, difficulty) {
         category = category.toLowerCase();
         difficulty = difficulty.toLowerCase();
-        fetch(`/api/quiz?category=${category}&difficulty=${difficulty}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(res => res.json())
-            .then(data => {
-                setQuizItems(data);
+        axios
+            .get(`/quiz?category=${category}&difficulty=${difficulty}`)
+            .then(res => {
+                setQuizItems(res.data);
                 setQuizCategory(category);
                 setQuizDifficulty(difficulty);
             });
     }
 
     function handleResetSearch() {
-        fetch('/api/quiz', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(res => res.json())
-            .then(data => {
-                setQuizItems(data);
-                setQuizCategory('Featured');
-            });
+        axios.get('/api/quiz').then(res => {
+            setQuizItems(res.data);
+            setQuizCategory('Featured');
+        });
     }
 
     return (

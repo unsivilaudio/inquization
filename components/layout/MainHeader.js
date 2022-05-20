@@ -1,17 +1,12 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 import Button from '../ui/Button';
 import classes from '../../styles/layout/MainHeader.module.scss';
 
-function MainHeader() {
-    const router = useRouter();
-    const { data: session, status } = useSession();
-
+export default function MainHeader({ session }) {
     function logoutHandler() {
-        signOut();
-        router.push('/');
+        signOut({ callbackUrl: '/' });
     }
     return (
         <header className={classes.MainHeader}>
@@ -25,12 +20,12 @@ function MainHeader() {
             </Link>
             <nav className={classes.Navigation}>
                 <ul>
-                    {!session && !status.loading && (
+                    {!session?.user && (
                         <li>
                             <Link href='/auth'>Login</Link>
                         </li>
                     )}
-                    {session && (
+                    {session?.user && (
                         <>
                             <li>
                                 <Link href='/profile'>Profile</Link>
@@ -50,8 +45,11 @@ function MainHeader() {
                     )}
                 </ul>
             </nav>
+            <div className={classes.UserInfo}>
+                {session?.user
+                    ? `Signed in as: ${session.user.email}`
+                    : 'Not Signed In'}
+            </div>
         </header>
     );
 }
-
-export default MainHeader;

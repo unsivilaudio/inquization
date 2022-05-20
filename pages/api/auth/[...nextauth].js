@@ -36,7 +36,12 @@ export default NextAuth({
     callbacks: {
         session: async ({ session, token }) => {
             if (session?.user) {
-                session.user.id = token.sub;
+                const user = await User.findById(token.sub);
+                if (user) {
+                    session.user.id = token.sub;
+                } else {
+                    return;
+                }
             }
             return session;
         },

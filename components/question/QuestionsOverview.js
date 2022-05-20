@@ -38,12 +38,4 @@ const QuestionsOverview = props => {
     );
 };
 
-QuestionsOverview.getInitialProps = ctx => {
-    return {
-        props: {
-            data: 'hello world',
-        },
-    };
-};
-
 export default QuestionsOverview;

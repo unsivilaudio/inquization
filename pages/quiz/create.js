@@ -7,29 +7,29 @@ import Button from '../../components/ui/Button';
 
 function QuizCreate() {
     const router = useRouter();
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState(subjects[0].category);
     const [difficulty, setDifficulty] = useState('easy');
     const [summary, setSummary] = useState('');
     const [title, setTitle] = useState('');
 
-    function handleChangeTitle(quiz) {
-        setTitle(quiz.target.value);
+    function handleChangeTitle(e) {
+        setTitle(e.target.value);
     }
 
-    function handleChangeCategory(quiz) {
-        setCategory(quiz.target.value);
+    function handleChangeCategory(e) {
+        setCategory(e.target.value);
     }
 
-    function handleChangeDifficulty(quiz) {
-        setDifficulty(quiz.target.value);
+    function handleChangeDifficulty(e) {
+        setDifficulty(e.target.value);
     }
 
-    function handleChangeSummary(quiz) {
-        setSummary(quiz.target.value);
+    function handleChangeSummary(e) {
+        setSummary(e.target.value);
     }
 
-    function submitHandler(event) {
-        event.preventDefault();
+    function submitHandler(e) {
+        e.preventDefault();
 
         const quiz = {
             category,

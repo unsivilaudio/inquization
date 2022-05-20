@@ -86,6 +86,8 @@ const QuestionCreate = props => {
 };
 
 QuestionCreate.getInitialProps = ctx => {
+    
+
     return {
         props: {
             data: 'hello world',

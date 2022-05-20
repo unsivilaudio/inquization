@@ -5,16 +5,22 @@ import Quiz from '../../../models/Quiz';
 import User from '../../../models/User';
 
 export default async function useHandler(req, res) {
+    let user;
     const {
         query: { category, difficulty },
         method,
     } = req;
     const session = await getSession({ req });
-    await connectToDatabase();
-    const user = await User.findById(session.user.id);
+    if (session) {
+        await connectToDatabase();
+        user = await User.findById(session.user.id);
+    }
 
     if (!user) {
-        return res.status(401).send('Please log in for access.');
+        return res.status(401).json({
+            status: 'unauthorized',
+            message: 'Please log in for access.',
+        });
     }
 
     let quizList = [];
@@ -29,7 +35,7 @@ export default async function useHandler(req, res) {
         case 'POST':
             if (user.type === 'student') {
                 return res.status(401).json({
-                    status: 'fail',
+                    status: 'unauthorized',
                     message: 'Not Authorized',
                 });
             }
