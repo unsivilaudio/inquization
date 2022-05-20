@@ -1,6 +1,6 @@
-import QuestionList from '../../components/question/QuestionList';
-import { getQuizById } from '../../helpers/api-util';
-import classes from '../../styles/pages/QuestionDetails.module.scss';
+import QuestionList from '../../../components/question/QuestionList';
+import { getQuizById } from '../../../helpers/api-util';
+import classes from '../../../styles/pages/QuestionDetails.module.scss';
 
 const DUMMY_DATA = [
     {
@@ -66,20 +66,20 @@ const DUMMY_DATA = [
 ];
 
 const QuestionDetails = props => {
-    const { title } = props.quiz;
+    const { title, questions } = props.quiz;
 
     return (
         <div className={classes.QuestionDetails}>
             <div className={classes.Title}>Quiz: {title}</div>
-            <QuestionList data={DUMMY_DATA} />
+            <QuestionList data={questions.length ? questions : []} />
         </div>
     );
 };
 
 export async function getServerSideProps(ctx) {
-    const { quizId } = ctx.query;
+    const { id } = ctx.query;
 
-    let quiz = await getQuizById(quizId);
+    let quiz = await getQuizById(id);
     quiz = JSON.parse(JSON.stringify(quiz));
 
     return {

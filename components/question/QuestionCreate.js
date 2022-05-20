@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import classes from '../../styles/question/QuestionCreate.module.scss';
 import Button from '../ui/Button';
 
-const QuestionCreate = props => {
+const QuestionCreate = ({ onSubmit }) => {
     const [question, setQuestion] = useState('');
     const [answers, setAnswers] = useState({
         correct: '',
@@ -23,8 +23,13 @@ const QuestionCreate = props => {
         }));
     }
 
+    function handleSubmitQuestion(e) {
+        e.preventDefault();
+        onSubmit({ question, answers });
+    }
+
     return (
-        <div className={classes.QuestionCreate}>
+        <div className={classes.QuestionCreate} onSubmit={handleSubmitQuestion}>
             <div className={classes.Header}>Create a question</div>
             <form className={classes.QuestionForm}>
                 <div className={classes.FormQuestion}>
@@ -86,8 +91,6 @@ const QuestionCreate = props => {
 };
 
 QuestionCreate.getInitialProps = ctx => {
-    
-
     return {
         props: {
             data: 'hello world',

@@ -13,7 +13,9 @@ const Quizzes = props => {
                 # of questions: {questions.length}
             </div>
             <div className={classes.Actions}>
-                <Button theme='invert'>edit questions</Button>
+                <Button theme='invert' link={`/questions/${_id}/add`}>
+                    edit questions
+                </Button>
                 <Button theme='danger'>Delete</Button>
             </div>
         </li>
