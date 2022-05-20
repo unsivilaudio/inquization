@@ -12,6 +12,7 @@ const QuestionList = props => {
         const questions = props.data.map((q, i, arr) => (
             <QuestionItem
                 key={q._id}
+                num={i + 1}
                 id={q._id}
                 content={q.content}
                 answers={q.answers}

@@ -13,7 +13,7 @@ const QuestionItem = props => {
     return (
         <div className={classes.QuestionItem}>
             <div className={classes.Question}>
-                Q{props.id}: {props.content}
+                Q{props.num}: {props.content}
             </div>
             <ul className={classes.AnswerList}>
                 {props.answers.map((answer, i) => {

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import classes from '../../styles/question/QuestionCreate.module.scss';
 import Button from '../ui/Button';
 
-const QuestionCreate = ({ onSubmit }) => {
+const QuestionForm = ({ type, questionData, onSubmit }) => {
     const [question, setQuestion] = useState('');
     const [answers, setAnswers] = useState({
         correct: '',
@@ -10,6 +10,25 @@ const QuestionCreate = ({ onSubmit }) => {
         alt2: '',
         alt3: '',
     });
+
+    useEffect(() => {
+        if (type === 'edit' && questionData) {
+            setQuestion(questionData.content);
+            setAnswers(() => {
+                const correct =
+                    questionData.answers[questionData.correctAnswer];
+                const answers = questionData.answers.filter(
+                    (_, i) => i !== questionData.correctAnswer
+                );
+                return {
+                    correct,
+                    alt1: answers[0],
+                    alt2: answers[1],
+                    alt3: answers[2],
+                };
+            });
+        }
+    }, [type, questionData]);
 
     function handleChangeQuestion(e) {
         setQuestion(e.target.value);
@@ -30,7 +49,9 @@ const QuestionCreate = ({ onSubmit }) => {
 
     return (
         <div className={classes.QuestionCreate} onSubmit={handleSubmitQuestion}>
-            <div className={classes.Header}>Create a question</div>
+            {type !== 'edit' && (
+                <div className={classes.Header}>Create a question</div>
+            )}
             <form className={classes.QuestionForm}>
                 <div className={classes.FormQuestion}>
                     <label htmlFor='question'>Question</label>
@@ -83,19 +104,13 @@ const QuestionCreate = ({ onSubmit }) => {
                 </div>
                 <div className={classes.Actions}>
                     <Button theme='danger'>Cancel</Button>
-                    <Button type='submit'>Add Question</Button>
+                    <Button type='submit'>
+                        {type !== 'edit' ? 'Add Question' : 'Update'}
+                    </Button>
                 </div>
             </form>
         </div>
     );
 };
 
-QuestionCreate.getInitialProps = ctx => {
-    return {
-        props: {
-            data: 'hello world',
-        },
-    };
-};
-
-export default QuestionCreate;
+export default QuestionForm;

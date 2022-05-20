@@ -1,10 +1,10 @@
 import Head from 'next/head';
 
-import { getQuizById } from '../../helpers/api-util';
-import Button from '../../components/ui/Button';
-import QuizHeader from '../../components/quiz/QuizHeader';
-import QuizLogistics from '../../components/quiz/QuizLogistics';
-import QuizSummary from '../../components/quiz/QuizSummary';
+import { getQuizById } from '../../../helpers/api-util';
+import Button from '../../../components/ui/Button';
+import QuizHeader from '../../../components/quiz/QuizHeader';
+import QuizLogistics from '../../../components/quiz/QuizLogistics';
+import QuizSummary from '../../../components/quiz/QuizSummary';
 
 import classes from '../../styles/pages/QuizDetail.module.scss';
 

@@ -19,7 +19,7 @@ export default async function useHandler(req, res) {
         case 'POST':
             const answers = randomize(Object.values(req.body.answers));
             const correctAnswer = answers.findIndex(
-                x => x === req.body.answers.correctAnswer
+                x => x === req.body.answers.correct
             );
 
             const quiz = await Quiz.findById(req.body.quizId);

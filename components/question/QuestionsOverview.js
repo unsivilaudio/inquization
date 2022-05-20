@@ -1,6 +1,13 @@
+import { useRouter } from 'next/router';
 import classes from '../../styles/question/QuestionsOverview.module.scss';
 
 const QuestionsOverview = ({ quiz }) => {
+    const router = useRouter();
+
+    function handleEditQuestion(id) {
+        router.push(`/questions/${id}/edit`);
+    }
+
     return (
         <div className={classes.QuestionsOverview}>
             <div className={classes.Header}>{quiz.title}</div>
@@ -15,7 +22,10 @@ const QuestionsOverview = ({ quiz }) => {
                             <div className={classes.Actions}>
                                 <div
                                     className={classes.Edit}
-                                    onClick={() => toggleShowEdit(DUMMY_DATA)}>
+                                    onClick={handleEditQuestion.bind(
+                                        null,
+                                        q._id
+                                    )}>
                                     Edit
                                 </div>
                                 <div className={classes.Delete}>Delete</div>

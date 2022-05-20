@@ -1,4 +1,4 @@
-import { getSession } from 'next-auth';
+import { getSession } from 'next-auth/react';
 import { randomize } from '../../../helpers/general-util';
 import Question from '../../../models/Question';
 import Quiz from '../../../models/Quiz';
@@ -39,7 +39,7 @@ export default async function useHandler(req, res) {
                 });
             }
 
-            if (quiz.creator !== session.user.id) {
+            if (!quiz.creator.equals(session.user.id)) {
                 return res.status(403).json({
                     status: 'fail',
                     message: 'You do not have permission to do that.',
@@ -48,7 +48,7 @@ export default async function useHandler(req, res) {
 
             let answers = randomize(Object.values(req.body.answers));
             let correctAnswer = answers.findIndex(
-                x => x === req.body.answers.correctAnswer
+                x => x === req.body.answers.correct
             );
             question.content = req.body.question;
             question.answers = answers;

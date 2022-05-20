@@ -44,3 +44,9 @@ export async function getFilteredQuiz(category, difficulty) {
     const data = await Quiz.find({ category, difficulty });
     return data;
 }
+
+export async function getQuestionById(id) {
+    await connectToDatabase();
+    const data = await Question.findById(id);
+    return data;
+}
