@@ -1,12 +1,21 @@
+import axios from '../../helpers/with-axios';
 import Button from '../ui/Button';
-
 import classes from '../../styles/profile/Quizzes.module.scss';
 
 const Quizzes = props => {
     const { data = [] } = props;
 
+    function handleDeleteQuiz(id) {
+        axios.delete(`/quiz/${id}`).then(() => {
+            const quizItem = document.getElementById(id);
+            if (quizItem) {
+                quizItem.remove();
+            }
+        });
+    }
+
     const quizItems = data.map(({ _id, title, summary, questions }) => (
-        <li key={_id} className={classes.QuizItem}>
+        <li key={_id} id={_id} className={classes.QuizItem}>
             <div className={classes.QuizTitle}>{title}</div>
             <div className={classes.QuizSummary}>{summary}</div>
             <div className={classes.QuizLength}>
@@ -14,9 +23,13 @@ const Quizzes = props => {
             </div>
             <div className={classes.Actions}>
                 <Button theme='invert' link={`/questions/${_id}/add`}>
-                    edit questions
+                    add or edit questions
                 </Button>
-                <Button theme='danger'>Delete</Button>
+                <Button
+                    theme='danger'
+                    onClick={handleDeleteQuiz.bind(null, _id)}>
+                    Delete
+                </Button>
             </div>
         </li>
     ));
