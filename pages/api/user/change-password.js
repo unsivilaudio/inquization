@@ -1,53 +1,48 @@
 import { getSession } from 'next-auth/react';
 import { connectToDatabase } from '../../../lib/db';
 import { hashPassword, verifyPassword } from '../../../lib/auth';
+import User from '../../../models/User';
 
 async function handler(req, res) {
     if (req.method !== 'PATCH') {
         return;
     }
 
-    const session = await getSession({ req: req });
+    const { password, nextPassword } = req.body;
+    if (!password || !nextPassword) {
+        return res.status(400).json({
+            message:
+                'Missing one or more fields for request: password nextPassword',
+        });
+    }
 
-    if (!session) {
-        res.status(401).json({ message: 'Permission Denied!' });
-        return;
+    const session = await getSession({ req });
+    console.log(session);
+    if (!session || !session.user) {
+        return res.status(401).json({ message: 'Permission Denied!' });
     }
 
     const userEmail = session.user.email;
-    const oldPassword = req.body.oldPassword;
-    const newPassword = req.body.newPassword;
+    await connectToDatabase();
 
-    const client = await connectToDatabase();
-
-    const usersCollection = client.db().collection('users');
-    const user = await usersCollection.findOne({ email: userEmail });
+    let user = await User.findOne({ email: userEmail });
 
     if (!user) {
-        res.status(404).json({ message: 'User not found.' });
-        client.close();
-        return;
+        return res.status(404).json({ message: 'User not found.' });
     }
 
     const currentPassword = user.password;
-
-    const passwordAreEqual = await verifyPassword(oldPassword, currentPassword);
+    const passwordAreEqual = await verifyPassword(password, currentPassword);
 
     if (!passwordAreEqual) {
-        res.status(403).json({ message: 'Invalid Password.' });
-        client.close;
-        return;
+        return res.status(403).json({ message: 'Invalid Password.' });
     }
 
-    const hashedPassword = await hashPassword(newPassword);
+    const hashedPassword = await hashPassword(nextPassword);
+    user.password = hashedPassword;
+    await user.save();
 
-    const result = await usersCollection.updateOne(
-        { email: userEmail },
-        { $set: { password: hashedPassword } }
-    );
-
-    client.close();
-    res.status(200).json({ message: 'Password Changed!' });
+    res.status(200).json({ message: 'Sucessfully updated password' });
 }
 
 export default handler;

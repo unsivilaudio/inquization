@@ -29,6 +29,16 @@ export async function getQuizById(id) {
     return data;
 }
 
+export async function getQuizByUser(id) {
+    await connectToDatabase();
+    let data = await Quiz.find({ creator: id });
+    if (!data) {
+        return [];
+    }
+
+    return data;
+}
+
 export async function getFilteredQuiz(category, difficulty) {
     await connectToDatabase();
     const data = await Quiz.find({ category, difficulty });

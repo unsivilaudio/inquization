@@ -22,6 +22,7 @@
     }
 
     &.Invert {
+        color: currentColor;
         background: transparent;
         border: 1px solid currentColor;
         box-shadow: none;

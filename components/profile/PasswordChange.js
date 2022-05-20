@@ -1,8 +1,17 @@
-import classes from '../../styles/profile/ProfileForm.module.scss';
 import { useState } from 'react';
-import Button from '../ui/Button';
 
-function ProfileForm(props) {
+import axios from '../../helpers/with-axios';
+import Button from '../ui/Button';
+import classes from '../../styles/profile/PasswordChange.module.scss';
+
+async function changePassword(password, nextPassword) {
+    return await axios.patch('/user/change-password', {
+        password,
+        nextPassword,
+    });
+}
+
+function PasswordChange(props) {
     const [curPwd, setCurPwd] = useState('');
     const [newPwd, setNewPwd] = useState('');
     const [newPwdConfirm, setNewPwdConfirm] = useState('');
@@ -19,20 +28,19 @@ function ProfileForm(props) {
         setNewPwdConfirm(e.target.value);
     }
 
-    function submitHandler(event) {
+    async function submitHandler(event) {
         event.preventDefault();
 
-        if (newPwd !== curPwd) {
+        if (newPwd !== newPwdConfirm) {
+            console.log('New passwords do not match.');
             return;
         }
 
-        props.onChangePassword({
-            oldPassword: curPwd,
-            newPassword: newPwd,
-        });
+        await changePassword(curPwd, newPwd);
     }
     return (
-        <form className={classes.ProfileForm} onSubmit={submitHandler}>
+        <form className={classes.PasswordChange} onSubmit={submitHandler}>
+            <div className={classes.Title}>Change Your Password</div>
             <div className={classes.FormGroup}>
                 <label htmlFor='current'>Current Password</label>
                 <input
@@ -67,4 +75,4 @@ function ProfileForm(props) {
     );
 }
 
-export default ProfileForm;
+export default PasswordChange;

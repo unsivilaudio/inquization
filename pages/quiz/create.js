@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
+import axios from '../../helpers/with-axios';
 import subjects from '../../lib/subjects';
-import classes from '../../styles/pages/QuizCreate.module.scss';
 import Button from '../../components/ui/Button';
+import classes from '../../styles/pages/QuizCreate.module.scss';
 
 function QuizCreate() {
     const router = useRouter();
@@ -38,22 +39,9 @@ function QuizCreate() {
             title,
         };
 
-        fetch('/api/quiz', {
-            method: 'POST',
-            body: JSON.stringify(quiz),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(res => res.json())
-            .then(() => {
-                router.push('/quiz');
-            })
-            .catch(err => {
-                if (err.response?.data?.message) {
-                    alert(err.response.data.message);
-                }
-            });
+        axios.post('/quiz', quiz).then(() => {
+            router.push('/profile#quizzes');
+        });
     }
     return (
         <form onSubmit={submitHandler} className={classes.QuizCreate}>
