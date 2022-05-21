@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import axios from '../../../helpers/with-axios';
-import QuestionCreate from '../../../components/question/QuestionCreate';
+import QuestionForm from '../../../components/question/QuestionForm';
 import classes from '../../../styles/pages/QuestionAdd.module.scss';
 
 const QuestionAdd = ({ quizId }) => {
@@ -15,7 +15,7 @@ const QuestionAdd = ({ quizId }) => {
 
     return (
         <div className={classes.QuestionAdd}>
-            <QuestionCreate quizId={quizId} onSubmit={handleSubmitQuestion} />
+            <QuestionForm quizId={quizId} onSubmit={handleSubmitQuestion} />
         </div>
     );
 };

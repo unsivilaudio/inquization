@@ -6,7 +6,7 @@ import QuizHeader from '../../../components/quiz/QuizHeader';
 import QuizLogistics from '../../../components/quiz/QuizLogistics';
 import QuizSummary from '../../../components/quiz/QuizSummary';
 
-import classes from '../../styles/pages/QuizDetail.module.scss';
+import classes from '../../../styles/pages/QuizDetail.module.scss';
 
 function QuizDetail(props) {
     const quiz = props.selectedQuiz;
