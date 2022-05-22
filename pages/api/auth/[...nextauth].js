@@ -36,6 +36,7 @@ export default NextAuth({
     callbacks: {
         session: async ({ session, token }) => {
             if (session?.user) {
+                await connectToDatabase();
                 const user = await User.findById(token.sub);
                 if (user) {
                     session.user.type = user.type || 'student';
