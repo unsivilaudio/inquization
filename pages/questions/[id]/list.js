@@ -6,9 +6,9 @@ const QuestionList = props => {
     return (
         <div className='QuestionList'>
             <QuestionsOverview quiz={props.quiz} />
-            <div>
+            <div style={{ marginTop: '1.5rem' }}>
                 <Button link={`/questions/${props.quiz._id}/add`}>
-                    Add a new question
+                    Add A New Question
                 </Button>
             </div>
         </div>
