@@ -1,6 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300:400;700&family=Open+Sans:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&family=Open+Sans:wght@300;400;600&display=swap');
 
 :root {
+    --body-text-light: #efeded;
+    --body-text-dark: #1f1f1f;
+    --body-bg-dark: #2d2d2d;
+    --body-bg-light: #e3e5f0;
+
     --color-black: #0f1117;
     --color-white: #f7f8f9;
 
@@ -33,7 +38,7 @@
 
     --input-focus-shadow: 0 0 5px 2px #3a6ddc;
 
-    --link-hover: #302b7d;
+    --link-hover: #3a6ddc;
 }
 
 * {
@@ -53,9 +58,17 @@ html {
 }
 
 body {
-    color: var(--color-black);
+    color: var(--body-text-dark);
+    background: var(--body-bg-light);
     font-size: 1.6rem;
     font-family: 'Open sans', 'Lato', san-serif;
+    font-weight: 300;
+    transition: background 0.3s ease, color 0.3s ease;
+
+    &.dark {
+        color: var(--body-text-light);
+        background: var(--body-bg-dark);
+    }
 }
 
 a {

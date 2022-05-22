@@ -7,7 +7,7 @@
     .Header {
         text-align: center;
         font-family: 'Lato';
-        font-size: 3.5rem;
+        font-size: 3.2rem;
         font-weight: 300;
     }
 
@@ -26,6 +26,7 @@
 
     .Actions {
         font-family: 'Lato';
+        font-weight: 400;
         margin-top: 1.5rem;
         font-size: 2rem;
         display: flex;
@@ -37,11 +38,12 @@
         }
 
         .Toggle {
+            padding: 0.7rem 0;
             position: relative;
             cursor: pointer;
             text-align: center;
             margin-top: 1.4rem;
-            color: var(--color-grey-dark-1);
+            color: var(--color-grey-dark-2);
             font-size: 1.8rem;
             font-style: italic;
             transition: all 0.3s ease;
@@ -59,7 +61,7 @@
             }
 
             &:hover {
-                color: var(--color-black);
+                color: var(--color-grey-dark-4);
                 &::after {
                     transform: scale(1);
                 }

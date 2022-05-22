@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 
 import Button from '../ui/Button';
+import ThemeToggle from '../ui/ThemeToggle';
 import classes from '../../styles/layout/MainHeader.module.scss';
 
 export default function MainHeader({ session }) {
@@ -20,6 +21,9 @@ export default function MainHeader({ session }) {
             </Link>
             <nav className={classes.Navigation}>
                 <ul>
+                    <li>
+                        <ThemeToggle />
+                    </li>
                     {!session?.user && (
                         <li>
                             <Link href='/auth'>Login</Link>
