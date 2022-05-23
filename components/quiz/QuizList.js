@@ -6,8 +6,7 @@ function QuizList(props) {
     return (
         <ul className={classes.QuizList}>
             <div className={classes.Title}>
-                {category} Quizzes{' '}
-                {category !== 'Featured' ? `(${difficulty})` : ''}
+                {category} Quizzes {category !== 'all' ? `(${difficulty})` : ''}
             </div>
             {items.map(quiz => (
                 <QuizItem
