@@ -39,7 +39,7 @@ export default function MainHeader({ session }) {
                                     Logout
                                 </Button>
                             </li>
-                            {session.user.type === 'teacher' && (
+                            {session.user.role === 'edit' && (
                                 <li>
                                     <Link href='/quiz/create'>Create</Link>
                                 </li>
