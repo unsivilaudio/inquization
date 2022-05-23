@@ -4,7 +4,7 @@
     --body-text-light: #efeded;
     --body-text-dark: #1f1f1f;
     --body-bg-dark: linear-gradient(to bottom, #2d2d2d, #1c273e);
-    --body-bg-light: linear-gradient(to bottom, #ccccda, #b4c3f7);
+    --body-bg-light: linear-gradient(to bottom, #ccccda, #d1d7ed);
 
     --color-black: #0f1117;
     --color-white: #f7f8f9;
@@ -35,6 +35,8 @@
 
     --card-shadow-primary: 0 2px 3px 1px rgba(0, 0, 0, 0.3);
     --card-border-radius: 0.7rem;
+    --card-border-radius-md: 1rem;
+    --card-border-radius-lg: 1.4rem;
     --card-padding: 2rem 3.2rem;
     --card-padding-bottom: 3rem;
     --card-bg: rgba(0, 0, 0, 0.07);

@@ -53,13 +53,8 @@ export default async function useHandler(req, res) {
                 });
             }
 
-            let answers = randomize(Object.values(req.body.answers));
-            let correctAnswer = answers.findIndex(
-                x => x === req.body.answers.correct
-            );
             question.content = req.body.question;
-            question.answers = answers;
-            question.correctAnswer = correctAnswer;
+            question.answers = Object.values(req.body.answers);
 
             await question.save();
 

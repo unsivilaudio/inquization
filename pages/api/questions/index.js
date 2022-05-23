@@ -24,11 +24,6 @@ export default async function useHandler(req, res) {
     let question = {};
     switch (method) {
         case 'POST':
-            const answers = randomize(Object.values(req.body.answers));
-            const correctAnswer = answers.findIndex(
-                x => x === req.body.answers.correct
-            );
-
             const quiz = await Quiz.findById(req.body.quizId);
             if (!quiz) {
                 return res.status(400).json({
@@ -47,8 +42,8 @@ export default async function useHandler(req, res) {
             question = await Question.create({
                 quizId: quiz._id,
                 content: req.body.question,
-                answers,
-                correctAnswer,
+                answers: Object.values(req.body.answers),
+                correctAnswer: 0,
             });
 
             quiz.questions.push(question._id);

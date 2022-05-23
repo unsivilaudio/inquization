@@ -1,3 +1,4 @@
+import { getSession } from 'next-auth/react';
 import { getQuizById } from '../../../helpers/api-util';
 import QuestionsOverview from '../../../components/question/QuestionsOverview';
 
@@ -12,16 +13,23 @@ const QuizEdit = props => {
     );
 };
 
-export async function getServerSideProps(ctx) {
-    if (!ctx.query.quizId) {
+export async function getServerSideProps({ req, query }) {
+    const session = await getSession({ req });
+    if (!query.quizId || session?.user?.role !== 'edit') {
         return {
-            redirect: '/',
+            redirect: {
+                destination: '/',
+            },
+            props: {},
         };
     }
-    let quiz = await getQuizById(ctx.query.quizId);
+    let quiz = await getQuizById(query.quizId);
     if (!quiz) {
         return {
-            redirect: '/',
+            redirect: {
+                destination: '/',
+            },
+            props: {},
         };
     }
     quiz = JSON.parse(JSON.stringify(quiz));

@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
+import { getSession } from 'next-auth/react';
 import axios from '../../../helpers/with-axios';
-import QuestionForm from '../../../components/question/QuestionForm';
 import { getQuestionById } from '../../../helpers/api-util';
+import QuestionForm from '../../../components/question/QuestionForm';
 
 import classes from '../../../styles/pages/QuestionEdit.module.scss';
 
@@ -21,6 +22,7 @@ const QuestionEdit = props => {
             <div className={classes.Header}>Edit Your Question</div>
             <QuestionForm
                 type='edit'
+                quizId={props.question.quizId}
                 questionData={props.question}
                 onSubmit={handleEditSubmit}
             />
@@ -28,17 +30,24 @@ const QuestionEdit = props => {
     );
 };
 
-export async function getServerSideProps(ctx) {
-    if (!ctx.query.id) {
+export async function getServerSideProps({ query, req }) {
+    const session = await getSession({ req });
+    if (!query.id || session?.user?.role !== 'edit') {
         return {
-            redirect: '/',
+            redirect: {
+                destination: '/',
+            },
+            props: {},
         };
     }
 
-    let question = await getQuestionById(ctx.query.id);
+    let question = await getQuestionById(query.id);
     if (!question) {
         return {
-            redirect: '/',
+            redirect: {
+                destination: '/',
+            },
+            props: {},
         };
     }
 

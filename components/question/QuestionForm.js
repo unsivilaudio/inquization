@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import classes from '../../styles/question/QuestionCreate.module.scss';
 import Button from '../ui/Button';
 
-const QuestionForm = ({ type, questionData, onSubmit }) => {
+const QuestionForm = ({ type, quizId, questionData, onSubmit }) => {
     const [question, setQuestion] = useState('');
     const [answers, setAnswers] = useState({
         correct: '',
@@ -103,9 +103,7 @@ const QuestionForm = ({ type, questionData, onSubmit }) => {
                     </div>
                 </div>
                 <div className={classes.Actions}>
-                    <Button
-                        theme='danger'
-                        link={`/questions/${questionData.quizId}/list`}>
+                    <Button theme='danger' link={`/questions/${quizId}/list`}>
                         Cancel
                     </Button>
                     <Button type='submit'>

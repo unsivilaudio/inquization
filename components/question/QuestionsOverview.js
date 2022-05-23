@@ -1,4 +1,7 @@
 import { useRouter } from 'next/router';
+
+import { randomize } from '../../helpers/general-util';
+import CircleCheck from '../../assets/svg/circle-check-solid.svg';
 import classes from '../../styles/question/QuestionsOverview.module.scss';
 
 const QuestionsOverview = ({ quiz }) => {
@@ -31,16 +34,18 @@ const QuestionsOverview = ({ quiz }) => {
                                 <div className={classes.Delete}>Delete</div>
                             </div>
                             <ol className={classes.Answers}>
-                                {q.answers.map((answer, y) => (
+                                {randomize(q.answers).map((answer, y) => (
                                     <li
                                         key={`${i}-${y}`}
                                         className={[
                                             classes.AnswerItem,
-                                            q.correctAnswer === y
+                                            q.answers[q.correctAnswer] ===
+                                            answer
                                                 ? classes.Correct
                                                 : '',
                                         ].join(' ')}>
                                         {answer}
+                                        <CircleCheck />
                                     </li>
                                 ))}
                             </ol>

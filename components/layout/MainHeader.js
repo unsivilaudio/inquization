@@ -6,6 +6,8 @@ import ThemeToggle from '../ui/ThemeToggle';
 import classes from '../../styles/layout/MainHeader.module.scss';
 
 export default function MainHeader({ currentUser }) {
+    console.log(currentUser);
+
     function logoutHandler() {
         signOut({ callbackUrl: '/' });
     }

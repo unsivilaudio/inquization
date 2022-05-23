@@ -113,7 +113,14 @@ function QuizCreate({ currentUser }) {
 
 export async function getServerSideProps({ req }) {
     const session = await getSession({ req });
-    console.log(session?.user);
+    if (session?.user?.role !== 'edit') {
+        return {
+            redirect: {
+                destination: '/',
+            },
+            props: {},
+        };
+    }
 
     return {
         props: {

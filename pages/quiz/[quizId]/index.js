@@ -46,6 +46,7 @@ export async function getServerSideProps(context) {
     const quizId = context.params.quizId;
 
     let quiz = await getQuizById(quizId);
+    quiz.questions.forEach(x => (x.correctAnswer = undefined));
     quiz = JSON.parse(JSON.stringify(quiz));
     return {
         props: {

@@ -17,10 +17,7 @@ function ProfilePage(props) {
 
 export async function getServerSideProps(context) {
     const session = await getSession({ req: context.req });
-    let quizzes = await getQuizByUser(session.user.id);
-    quizzes = JSON.parse(JSON.stringify(quizzes));
-
-    if (!session) {
+    if (!session?.user) {
         return {
             redirect: {
                 destination: '/auth',
@@ -28,6 +25,9 @@ export async function getServerSideProps(context) {
             },
         };
     }
+
+    let quizzes = await getQuizByUser(session.user.id);
+    quizzes = JSON.parse(JSON.stringify(quizzes));
 
     return {
         props: { session, quizzes },

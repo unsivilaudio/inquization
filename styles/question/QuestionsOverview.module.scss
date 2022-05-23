@@ -90,6 +90,22 @@
                         padding: 1.5rem 2.5rem;
                         font-size: 1.6rem;
                         font-weight: 600;
+
+                        display: flex;
+                        justify-content: space-between;
+
+                        svg {
+                            height: 2.5rem;
+                            display: none;
+                        }
+
+                        &.Correct {
+                            box-shadow: 0 0 7px 2px var(--color-alert-success);
+                            svg {
+                                display: block;
+                                fill: #519c49;
+                            }
+                        }
                     }
                 }
             }

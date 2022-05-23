@@ -1,3 +1,4 @@
+import { getSession } from 'next-auth/react';
 import QuestionsOverview from '../../../components/question/QuestionsOverview';
 import Button from '../../../components/ui/Button';
 import { getQuizById } from '../../../helpers/api-util';
@@ -17,11 +18,24 @@ const QuestionList = props => {
     );
 };
 
-export async function getServerSideProps(ctx) {
-    let quiz = await getQuizById(ctx.query.id);
+export async function getServerSideProps({ req, query }) {
+    const session = await getSession({ req });
+    if (!query.id || !session?.user) {
+        return {
+            redirect: {
+                destination: '/',
+            },
+            props: {},
+        };
+    }
+
+    let quiz = await getQuizById(query.id);
     if (!quiz) {
         return {
-            redirect: '/',
+            redirect: {
+                destination: '/',
+            },
+            props: {},
         };
     }
     quiz = JSON.parse(JSON.stringify(quiz));

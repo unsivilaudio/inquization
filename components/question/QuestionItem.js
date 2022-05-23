@@ -2,13 +2,17 @@ import { useState, useEffect } from 'react';
 
 import Button from '../ui/Button';
 import classes from '../../styles/question/QuestionItem.module.scss';
+import { randomize } from '../../helpers/general-util';
 
 const QuestionItem = props => {
     const [value, setValue] = useState(props.submittedValue);
+    const [answers, setAnswers] = useState([]);
 
     function handleChangeValue(val) {
         setValue(val);
     }
+
+    const letters = ['a', 'b', 'c', 'd'];
 
     return (
         <div className={classes.QuestionItem}>
@@ -25,6 +29,7 @@ const QuestionItem = props => {
                                 checked={value?.toString() === i.toString()}
                                 onChange={handleChangeValue.bind(this, i)}
                             />
+                            <span>{letters[i]})</span>
                             <p>{answer}</p>
                         </li>
                     );

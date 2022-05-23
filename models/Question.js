@@ -6,6 +6,10 @@ const questionSchema = new mongoose.Schema({
         ref: 'Quiz',
         required: true,
     },
+    quizVersion: {
+        type: Number,
+        required: true,
+    },
     content: {
         type: String,
         required: true,
@@ -17,7 +21,7 @@ const questionSchema = new mongoose.Schema({
     ],
     correctAnswer: {
         type: Number,
-        required: true,
+        default: 0,
     },
 });
 
