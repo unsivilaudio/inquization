@@ -2,6 +2,8 @@ import { getSession } from 'next-auth/react';
 import User from '../../../models/User';
 
 export default async function useHandler(req, res) {
+    if (req.method !== 'GET') return;
+
     let user;
     const session = await getSession({ req });
 

@@ -25,6 +25,9 @@ const Quizzes = props => {
                 <Button theme='invert' link={`/questions/${_id}/add`}>
                     add questions
                 </Button>
+                <Button theme='primary' link={`/questions/${_id}/list`}>
+                    overview
+                </Button>
                 <Button
                     theme='danger'
                     onClick={handleDeleteQuiz.bind(null, _id)}>

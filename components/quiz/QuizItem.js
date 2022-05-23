@@ -17,16 +17,18 @@ function QuizItem(props) {
         <li className={classes.QuizItem}>
             <div className={classes.Title}>{title}</div>
             <div className={classes.Content}>
-                <div className={classes.Category}>{category}</div>
-                <div
-                    className={classes.Difficulty}
-                    style={{ color: diffColor }}>
-                    {difficulty}
+                <div className={classes.Details}>
+                    <div className={classes.Category}>{category}</div>
+                    <div
+                        className={classes.Difficulty}
+                        style={{ color: diffColor }}>
+                        {difficulty}
+                    </div>
+                    <p className={classes.Summary}>{summary}</p>
                 </div>
-                <p className={classes.Summary}>{summary}</p>
-            </div>
-            <div className={classes.Actions}>
-                <Button link={`/quiz/${id}`}>Details</Button>
+                <div className={classes.Actions}>
+                    <Button link={`/quiz/${id}`}>Details</Button>
+                </div>
             </div>
         </li>
     );

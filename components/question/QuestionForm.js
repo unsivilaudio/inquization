@@ -103,7 +103,11 @@ const QuestionForm = ({ type, questionData, onSubmit }) => {
                     </div>
                 </div>
                 <div className={classes.Actions}>
-                    <Button theme='danger'>Cancel</Button>
+                    <Button
+                        theme='danger'
+                        link={`/questions/${questionData.quizId}/list`}>
+                        Cancel
+                    </Button>
                     <Button type='submit'>
                         {type !== 'edit' ? 'Add Question' : 'Update'}
                     </Button>

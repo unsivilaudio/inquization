@@ -1,16 +1,16 @@
 import { Fragment } from 'react';
 import MainHeader from './MainHeader';
 
-import { useSession } from 'next-auth/react';
 import classes from '../../styles/layout/Layout.module.scss';
+import { useSession } from 'next-auth/react';
 
-function Layout(props) {
-    const { data: session, status } = useSession();
+function Layout({ children }) {
+    const { data: session } = useSession();
 
     return (
         <Fragment>
-            <MainHeader session={session} status={status} />
-            <main className={classes.Layout}>{props.children}</main>
+            <MainHeader currentUser={session?.user} />
+            <main className={classes.Layout}>{children}</main>
         </Fragment>
     );
 }

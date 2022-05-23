@@ -2,9 +2,11 @@ import QuestionsOverview from '../../../components/question/QuestionsOverview';
 import Button from '../../../components/ui/Button';
 import { getQuizById } from '../../../helpers/api-util';
 
+import classes from '../../../styles/question/QuestionList.module.scss';
+
 const QuestionList = props => {
     return (
-        <div className='QuestionList'>
+        <div className={classes.QuestionList}>
             <QuestionsOverview quiz={props.quiz} />
             <div style={{ marginTop: '1.5rem' }}>
                 <Button link={`/questions/${props.quiz._id}/add`}>

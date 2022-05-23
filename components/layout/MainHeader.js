@@ -5,7 +5,7 @@ import Button from '../ui/Button';
 import ThemeToggle from '../ui/ThemeToggle';
 import classes from '../../styles/layout/MainHeader.module.scss';
 
-export default function MainHeader({ session }) {
+export default function MainHeader({ currentUser }) {
     function logoutHandler() {
         signOut({ callbackUrl: '/' });
     }
@@ -24,12 +24,12 @@ export default function MainHeader({ session }) {
                     <li>
                         <ThemeToggle />
                     </li>
-                    {!session?.user && (
+                    {!currentUser && (
                         <li>
                             <Link href='/auth'>Login</Link>
                         </li>
                     )}
-                    {session?.user && (
+                    {currentUser && (
                         <>
                             <li>
                                 <Link href='/profile'>Profile</Link>
@@ -39,7 +39,7 @@ export default function MainHeader({ session }) {
                                     Logout
                                 </Button>
                             </li>
-                            {session.user.role === 'edit' && (
+                            {currentUser.role === 'edit' && (
                                 <li>
                                     <Link href='/quiz/create'>Create</Link>
                                 </li>
@@ -52,8 +52,8 @@ export default function MainHeader({ session }) {
                 </ul>
             </nav>
             <div className={classes.UserInfo}>
-                {session?.user
-                    ? `Signed in as: ${session.user.email}`
+                {currentUser
+                    ? `Signed in as: ${currentUser.email}`
                     : 'Not Signed In'}
             </div>
         </header>

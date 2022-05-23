@@ -1,11 +1,12 @@
 .QuestionsOverview {
-    font-family: 'Lato';
+    width: 100%;
     max-width: 90rem;
     margin: 0 auto;
     margin-top: 2rem;
     padding: 1.4rem 0;
 
     .Header {
+        font-family: 'Lato';
         font-size: 3.2rem;
         font-weight: 300;
         text-transform: uppercase;
@@ -16,6 +17,7 @@
         margin-top: 1.5rem;
 
         .Title {
+            font-family: 'Lato';
             font-size: 2.6rem;
             font-weight: 400;
             font-style: italic;
@@ -28,13 +30,13 @@
 
             .QuestionItem {
                 margin-top: 1.5rem;
-                padding: 1.8rem 2.8rem;
-                padding-bottom: 2.4rem;
-
-                border: 1px solid currentColor;
-                border-radius: 1rem;
+                padding: var(--card-padding);
+                padding-bottom: var(--card-padding-bottom);
+                background: var(--card-bg);
+                border-radius: var(--card-border-radius);
 
                 .Actions {
+                    margin-top: 1rem;
                     font-size: 1.4rem;
                     font-weight: 600;
                     padding: 1rem 0;
@@ -77,7 +79,7 @@
                 }
 
                 .Answers {
-                    padding: 2rem;
+                    padding: 2rem 0;
                     list-style: none;
 
                     .AnswerItem {
