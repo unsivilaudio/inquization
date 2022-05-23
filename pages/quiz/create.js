@@ -1,17 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { getSession } from 'next-auth/react';
 
 import axios from '../../helpers/with-axios';
 import subjects from '../../lib/subjects';
 import Button from '../../components/ui/Button';
 import classes from '../../styles/pages/QuizCreate.module.scss';
 
-function QuizCreate() {
+function QuizCreate({ currentUser }) {
     const router = useRouter();
     const [category, setCategory] = useState(subjects[0].category);
     const [difficulty, setDifficulty] = useState('easy');
     const [summary, setSummary] = useState('');
     const [title, setTitle] = useState('');
+
+    useEffect(() => {
+        if (!currentUser || currentUser.role !== 'edit') {
+            router.push('/');
+        }
+    }, [currentUser, router]);
 
     function handleChangeTitle(e) {
         setTitle(e.target.value);
@@ -103,4 +110,16 @@ function QuizCreate() {
         </form>
     );
 }
+
+export async function getServerSideProps({ req }) {
+    const session = await getSession({ req });
+    console.log(session?.user);
+
+    return {
+        props: {
+            currentUser: session?.user || null,
+        },
+    };
+}
+
 export default QuizCreate;
