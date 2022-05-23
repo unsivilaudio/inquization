@@ -9,9 +9,16 @@ export default async function useHandler(req, res) {
     const { method } = req;
 
     if (!session?.user) {
-        return res.status(403).json({
+        return res.status(401).json({
             status: 'fail',
             message: 'Please sign in to use this route.',
+        });
+    }
+
+    if (session.user.role !== 'edit') {
+        return res.status(403).json({
+            status: 'fail',
+            message: 'You are not allowed to do that',
         });
     }
 

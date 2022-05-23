@@ -39,7 +39,7 @@ export default NextAuth({
                 await connectToDatabase();
                 const user = await User.findById(token.sub);
                 if (user) {
-                    session.user.type = user.type || 'student';
+                    session.user.role = user.role || 'restricted';
                     session.user.id = token.sub;
                 } else {
                     return;

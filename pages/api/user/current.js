@@ -1,9 +1,9 @@
-import { useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import User from '../../../models/User';
 
 export default async function useHandler(req, res) {
     let user;
-    const { data: session } = useSession();
+    const session = await getSession({ req });
 
     if (session.user?.id) {
         user = await User.findById(session.user.id);
@@ -13,5 +13,8 @@ export default async function useHandler(req, res) {
         return res.status(200).json(user);
     }
 
-    return res.status(401).send({ message: 'Please log in again.' });
+    return res.status(401).send({
+        status: 'fail',
+        message: 'Please log in again.',
+    });
 }

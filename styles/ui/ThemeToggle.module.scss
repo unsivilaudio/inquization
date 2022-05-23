@@ -42,7 +42,7 @@
             height: 100%;
             width: 100%;
             border-radius: 1.3rem;
-            background: var(--body-bg-light);
+            background: var(--color-grey-light-2);
             transition: all 0.3s ease-in-out;
         }
 
@@ -64,7 +64,7 @@
 
             .Toggler {
                 transform: translateX(3.3rem);
-                background: var(--body-text-dark);
+                background: var(--color-grey-dark-4);
             }
         }
     }

@@ -14,6 +14,9 @@ function QuizSearch({ onSearch, onReset }) {
     }
 
     function handleChangeCategory(e) {
+        if (e.target.value === 'all') {
+            setDifficulty('-');
+        }
         setCategory(e.target.value);
     }
 
@@ -39,6 +42,7 @@ function QuizSearch({ onSearch, onReset }) {
                         id='category'
                         onChange={handleChangeCategory}
                         value={category}>
+                        <option value='all'>all</option>
                         {categorySelects}
                     </select>
                 </div>
@@ -48,6 +52,7 @@ function QuizSearch({ onSearch, onReset }) {
                         id='difficulty'
                         onChange={handleChangeDifficulty}
                         value={difficulty}>
+                        <option value='-'>-</option>
                         <option value='easy'>Easy</option>
                         <option value='medium'>Medium</option>
                         <option value='hard'>Hard</option>

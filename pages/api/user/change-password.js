@@ -4,45 +4,62 @@ import { hashPassword, verifyPassword } from '../../../lib/auth';
 import User from '../../../models/User';
 
 async function handler(req, res) {
-    if (req.method !== 'PATCH') {
-        return;
+    const session = await getSession({ req });
+    if (!session?.user) {
+        return res.status(401).json({
+            status: 'fail',
+            message: 'Please log in for access.',
+        });
     }
 
     const { password, nextPassword } = req.body;
     if (!password || !nextPassword) {
         return res.status(400).json({
+            status: 'fail',
             message:
                 'Missing one or more fields for request: password nextPassword',
         });
     }
 
-    const session = await getSession({ req });
-    console.log(session);
-    if (!session || !session.user) {
-        return res.status(401).json({ message: 'Permission Denied!' });
-    }
-
-    const userEmail = session.user.email;
     await connectToDatabase();
-
-    let user = await User.findOne({ email: userEmail });
+    const { email } = session.user;
+    let user = await User.findOne({ email });
 
     if (!user) {
-        return res.status(404).json({ message: 'User not found.' });
+        return res.status(404).json({
+            status: 'fail',
+            message: 'User not found.',
+        });
     }
 
-    const currentPassword = user.password;
-    const passwordAreEqual = await verifyPassword(password, currentPassword);
-
-    if (!passwordAreEqual) {
-        return res.status(403).json({ message: 'Invalid Password.' });
+    if (!user._id.equals(session.user.id)) {
+        return res.status(403).json({
+            status: 'fail',
+            message: 'You are not allowed to do that.',
+        });
     }
 
-    const hashedPassword = await hashPassword(nextPassword);
-    user.password = hashedPassword;
-    await user.save();
+    switch (method) {
+        case 'PATCH':
+            const currentPassword = user.password;
+            const passwordAreEqual = await verifyPassword(
+                password,
+                currentPassword
+            );
 
-    res.status(200).json({ message: 'Sucessfully updated password' });
+            if (!passwordAreEqual) {
+                return res.status(403).json({ message: 'Invalid Password.' });
+            }
+
+            const hashedPassword = await hashPassword(nextPassword);
+            user.password = hashedPassword;
+            await user.save();
+
+            res.status(200).json({ message: 'Sucessfully updated password' });
+        default:
+            res.setHeader('Allow', ['PATCH']);
+            res.status(405).end(`Method ${method} Not Allowed`);
+    }
 }
 
 export default handler;

@@ -10,11 +10,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    type: {
+    roles: {
         type: String,
         required: true,
-        enum: ['teacher', 'aide', 'student'],
-        default: 'student',
+        enum: ['edit', 'view', 'restricted'],
+        default: 'restricted',
     },
 });
 

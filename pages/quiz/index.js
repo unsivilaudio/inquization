@@ -9,8 +9,8 @@ import Head from 'next/head';
 function Quiz() {
     const router = useRouter();
     const [quizItems, setQuizItems] = useState([]);
-    const [quizCategory, setQuizCategory] = useState('Featured');
-    const [quizDifficulty, setQuizDifficulty] = useState('Easy');
+    const [quizCategory, setQuizCategory] = useState('All');
+    const [quizDifficulty, setQuizDifficulty] = useState('-');
 
     useEffect(() => {
         axios
@@ -25,6 +25,10 @@ function Quiz() {
     }, []);
 
     function handleGetSearch(category, difficulty) {
+        if (category === 'all') {
+            handleResetSearch();
+            return;
+        }
         category = category.toLowerCase();
         difficulty = difficulty.toLowerCase();
         axios
@@ -37,9 +41,9 @@ function Quiz() {
     }
 
     function handleResetSearch() {
-        axios.get('/api/quiz').then(res => {
+        axios.get('/quiz').then(res => {
             setQuizItems(res.data);
-            setQuizCategory('Featured');
+            setQuizCategory('all');
         });
     }
 

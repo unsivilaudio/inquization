@@ -4,7 +4,7 @@
     --body-text-light: #efeded;
     --body-text-dark: #1f1f1f;
     --body-bg-dark: #2d2d2d;
-    --body-bg-light: #e3e5f0;
+    --body-bg-light: linear-gradient(to bottom, #ccccda, #b4c3f7);
 
     --color-black: #0f1117;
     --color-white: #f7f8f9;
@@ -58,6 +58,7 @@ html {
 }
 
 body {
+    min-height: 100vh;
     color: var(--body-text-dark);
     background: var(--body-bg-light);
     font-size: 1.6rem;

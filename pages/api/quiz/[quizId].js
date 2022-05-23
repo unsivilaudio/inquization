@@ -23,13 +23,19 @@ export default async function useHandler(req, res) {
                     message: 'You must provide an id.',
                 });
             }
-            quiz = await getQuizById(quizId);
+            quiz = await getQuizById(quizId).populate('questions');
             return res.status(200).json({
                 status: 'success',
-                message: 'Successfully created quiz.',
                 quiz,
             });
         case 'DELETE':
+            if (req.session.user.role !== 'edit') {
+                return res.status(403).json({
+                    status: 'fail',
+                    message: 'You are not allowed to do that.',
+                });
+            }
+
             if (!quizId) {
                 return res.status(400).json({
                     status: 'fail',
