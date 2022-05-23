@@ -3,11 +3,19 @@ import SunSolid from '../../assets/svg/sun-solid.svg';
 import SunOutline from '../../assets/svg/sun-regular.svg';
 
 import classes from '../../styles/ui/ThemeToggle.module.scss';
+import { getStorageItem, setStorageItem } from '../../helpers/local-storage';
 
 const ThemeToggle = props => {
     const [theme, setTheme] = useState('light');
     const toggleContainerClass = [classes.ToggleContainer];
     const iconClass = [classes.Icon];
+
+    useEffect(() => {
+        const opts = getStorageItem('inquization');
+        if (opts?.theme) {
+            setTheme(opts.theme);
+        }
+    }, []);
 
     useEffect(() => {
         if (theme === 'dark') {
@@ -20,6 +28,7 @@ const ThemeToggle = props => {
     function handleToggleTheme() {
         const nextTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(nextTheme);
+        setStorageItem('inquization', { theme: nextTheme });
     }
 
     if (theme === 'dark') {
