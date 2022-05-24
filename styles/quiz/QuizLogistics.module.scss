@@ -14,10 +14,26 @@
         flex-basis: 50%;
         list-style: none;
 
-        li {
-            padding: 0.8rem 1.5rem;
+        .ListItem {
+            font-size: 2.4rem;
+            padding: 0.8rem 3.2rem;
             text-align: center;
             background: rgba(0, 0, 0, 0.15);
+
+            display: flex;
+            justify-content: space-between;
+
+            .Label {
+                font-family: 'Lato';
+                text-transform: capitalize;
+            }
+
+            .Value {
+                text-transform: uppercase;
+                font-weight: 400;
+                flex-basis: 50%;
+                text-align: center;
+            }
 
             &:not(:first-child) {
                 margin-top: 1rem;

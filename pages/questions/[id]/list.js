@@ -1,13 +1,17 @@
 import { getSession } from 'next-auth/react';
 import QuestionsOverview from '../../../components/question/QuestionsOverview';
 import Button from '../../../components/ui/Button';
-import { getQuizById } from '../../../helpers/api-util';
+import Head from 'next/head';
 
+import { getQuizById } from '../../../helpers/api-util';
 import classes from '../../../styles/question/QuestionList.module.scss';
 
 const QuestionList = props => {
     return (
         <div className={classes.QuestionList}>
+            <Head>
+                <title>Question List | The Great Inquization</title>
+            </Head>
             <QuestionsOverview quiz={props.quiz} />
             <div style={{ marginTop: '1.5rem' }}>
                 <Button link={`/questions/${props.quiz._id}/add`}>

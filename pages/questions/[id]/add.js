@@ -21,7 +21,7 @@ const QuestionAdd = ({ quizId }) => {
     );
 };
 
-export function getServerSideProps({req, query}) {
+export async function getServerSideProps({ req, query }) {
     const session = await getSession({ req });
     if (!query.id || session?.user?.role !== 'edit') {
         return {

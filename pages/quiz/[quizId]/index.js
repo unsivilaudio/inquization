@@ -22,7 +22,7 @@ function QuizDetail(props) {
     return (
         <div className={classes.QuizDetail}>
             <Head>
-                <title>{quiz.title}</title>
+                <title>Details | The Great Inquization</title>
                 <meta name='description' content='amazing Quiz...' />
             </Head>
             <QuizHeader title={quiz.title} />
@@ -30,6 +30,7 @@ function QuizDetail(props) {
                 <QuizLogistics
                     category={quiz.category}
                     difficulty={quiz.difficulty}
+                    length={quiz.questions.length}
                     image={quiz.image}
                     imageAlt={quiz.title}
                 />

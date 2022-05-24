@@ -1,11 +1,10 @@
-import QuestionCreate from '../components/question/QuestionCreate';
-import QuestionsOverview from '../components/question/QuestionsOverview';
+import Alert from '../components/ui/Alert';
 
 const Dummy = props => {
     return (
         <div className='container'>
-            <QuestionsOverview />
-            {/* <QuestionCreate /> */}
+            Welcome to the Dummy Component
+            <Alert type='success'>This is a success Alert</Alert>
         </div>
     );
 };

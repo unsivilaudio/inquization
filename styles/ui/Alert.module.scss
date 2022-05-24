@@ -1,0 +1,23 @@
+.Alert {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    padding: 1rem 2rem;
+    width: 90%;
+    max-width: 90rem;
+    font-weight: bold;
+    font-size: 2rem;
+    transform: translateX(-50%);
+
+    &.Error {
+        background: var(--color-alert-danger);
+    }
+
+    &.Info {
+        background: var(--color-alert-info);
+    }
+
+    &.Success {
+        background: var(--color-alert-success);
+    }
+}

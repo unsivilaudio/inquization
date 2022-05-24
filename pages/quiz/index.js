@@ -50,7 +50,7 @@ function Quiz() {
     return (
         <>
             <Head>
-                <title>Schwizz</title>
+                <title>Search | The Great Inquization</title>
                 <meta
                     name='description'
                     content='Find a lot of great quiz...'

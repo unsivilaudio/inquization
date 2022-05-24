@@ -1,13 +1,18 @@
-import { useRef } from 'react';
-import { useEffect } from 'react/cjs/react.production.min';
-import classes from '../../styles/ui/ErrorAlert.module.scss';
+import { useRef, useEffect } from 'react';
+import classes from '../../styles/ui/Alert.module.scss';
 
-function Alert({ type = 'error', callback, timeout = 3000 }) {
+function Alert({ type = 'error', callback, timeout = 3000, children }) {
     const alertRef = useRef(null);
     const alertTimeout = useRef();
     const alertClasses = [classes.Alert];
 
     useEffect(() => {
+        if (timeout > 0) {
+            alertTimeout.current = setTimeout(() => {
+                alertRef.current.remove();
+            }, timeout);
+        }
+
         if (!isNaN(timeout) && callback) {
             alertTimeout.current = setTimeout(callback, timeout);
         }
@@ -30,8 +35,8 @@ function Alert({ type = 'error', callback, timeout = 3000 }) {
     }
 
     return (
-        <div className={classes.Alert} ref={alertRef}>
-            {props.children}
+        <div className={alertClasses.join(' ')} ref={alertRef}>
+            {children}
         </div>
     );
 }

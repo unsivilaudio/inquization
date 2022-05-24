@@ -8,7 +8,6 @@ const QuestionList = props => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
 
     useEffect(() => {
-        // FETCH THE QUIZ DETAILS IN HERE??
         const questions = props.data.map((q, i, arr) => (
             <QuestionItem
                 key={q._id}

@@ -12,7 +12,7 @@ export async function getQuizById(id) {
     }
 
     const questions = await Question.find({ quizId: id });
-    questions.forEach((question, i, arr) => {
+    questions.forEach(question => {
         const answers = randomize(question.answers);
         const correctAnswer = answers.findIndex(
             x => x === question.answers[question.correctAnswer]
@@ -20,8 +20,6 @@ export async function getQuizById(id) {
 
         question.answers = answers;
         question.correctAnswer = correctAnswer;
-
-        console.log(question.answers, question.correctAnswer);
     });
     data.questions = questions;
     return data;
