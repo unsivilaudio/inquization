@@ -1,12 +1,13 @@
-import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { getSession } from 'next-auth/react';
 
 import axios from '../../helpers/with-axios';
 import QuizSearch from '../../components/quiz/QuizSearch';
 import QuizList from '../../components/quiz/QuizList';
 import Head from 'next/head';
 
-function Quiz() {
+function Quiz({ currentUser }) {
     const router = useRouter();
     const [quizItems, setQuizItems] = useState([]);
     const [quizCategory, setQuizCategory] = useState('All');
@@ -61,12 +62,23 @@ function Quiz() {
                 onReset={handleResetSearch}
             />
             <QuizList
+                currentUser={currentUser}
                 items={quizItems}
                 category={quizCategory}
                 difficulty={quizDifficulty}
             />
         </>
     );
+}
+
+export async function getServerSideProps({ req }) {
+    const session = await getSession({ req });
+
+    return {
+        props: {
+            currentUser: session?.user || null,
+        },
+    };
 }
 
 export default Quiz;

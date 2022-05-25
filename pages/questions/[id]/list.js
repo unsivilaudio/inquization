@@ -46,6 +46,13 @@ export async function getServerSideProps({ req, query }) {
         };
     }
     quiz = JSON.parse(JSON.stringify(quiz));
+
+    if (session?.user?.role !== 'edit') {
+        quiz.questons.forEach(question => {
+            question.correctAnswer = undefined;
+        });
+    }
+
     return {
         props: {
             quiz,

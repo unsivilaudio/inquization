@@ -2,7 +2,7 @@ import classes from '../../styles/quiz/QuizItem.module.scss';
 import Button from '../ui/Button';
 
 function QuizItem(props) {
-    const { title, summary, category, difficulty, image, id } = props;
+    const { currentUser, title, summary, category, difficulty, id } = props;
     let diffColor = 'green';
 
     switch (difficulty) {
@@ -27,6 +27,11 @@ function QuizItem(props) {
                     <p className={classes.Summary}>{summary}</p>
                 </div>
                 <div className={classes.Actions}>
+                    {currentUser.role === 'view' && (
+                        <Button theme='invert' link={`/questions/${id}/list`}>
+                            View
+                        </Button>
+                    )}
                     <Button link={`/quiz/${id}`}>Details</Button>
                 </div>
             </div>

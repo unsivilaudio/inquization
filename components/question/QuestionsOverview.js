@@ -85,7 +85,8 @@ const QuestionsOverview = ({ quiz, currentUser }) => {
                                             className={[
                                                 classes.AnswerItem,
                                                 q.answers[q.correctAnswer] ===
-                                                answer
+                                                    answer &&
+                                                currentUser.role === 'edit'
                                                     ? classes.Correct
                                                     : '',
                                             ].join(' ')}>
