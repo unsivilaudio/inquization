@@ -54,7 +54,7 @@ export default async function useHandler(req, res) {
             }
 
             question.content = req.body.question;
-            question.answers = Object.values(req.body.answers);
+            question.answers = req.body.answers;
 
             await question.save();
 
