@@ -41,8 +41,9 @@ export default async function useHandler(req, res) {
 
             question = await Question.create({
                 quizId: quiz._id,
+                quizVersion: quiz.version,
                 content: req.body.question,
-                answers: Object.values(req.body.answers),
+                answers: req.body.answers,
                 correctAnswer: 0,
             });
 

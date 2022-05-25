@@ -27,14 +27,17 @@ const QuestionForm = ({ type, quizId, questionData, onSubmit }) => {
     }
 
     function handleChangeAnswer(e) {
-        let currentAnswers = [...answers];
-        currentAnswers[e.target.id] = e.target.value;
-        setAnswers(currentAnswers);
+        setAnswers(st =>
+            st.map((val, i) => {
+                if (e.target.id === i.toString()) return e.target.value;
+                return val;
+            })
+        );
     }
 
     function handleAddAnswer() {
         if (answersLength < 5) {
-            setAnswers(st => st.push(''));
+            setAnswers(st => [...st, '']);
             setAnswersLength(st => st + 1);
         }
     }
