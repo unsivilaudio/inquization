@@ -86,7 +86,10 @@ export default async function useHandler(req, res) {
                 });
             }
 
-            quiz.questons = quiz.questions.filter(id => id !== question._id);
+            quiz.questions = quiz.questions.filter(
+                id => !question._id.equals(id)
+            );
+
             await quiz.save();
             await question.remove();
 
