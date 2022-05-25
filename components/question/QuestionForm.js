@@ -4,28 +4,20 @@ import Button from '../ui/Button';
 
 const QuestionForm = ({ type, quizId, questionData, onSubmit }) => {
     const [question, setQuestion] = useState('');
-    const [answers, setAnswers] = useState({
-        correct: '',
-        alt1: '',
-        alt2: '',
-        alt3: '',
-    });
+    const [answersLength, setAnswersLength] = useState(3);
+    const [answers, setAnswers] = useState(['', '', '']);
 
     useEffect(() => {
         if (type === 'edit' && questionData) {
             setQuestion(questionData.content);
+            setAnswersLength(questionData.answers.length);
             setAnswers(() => {
                 const correct =
                     questionData.answers[questionData.correctAnswer];
                 const answers = questionData.answers.filter(
                     (_, i) => i !== questionData.correctAnswer
                 );
-                return {
-                    correct,
-                    alt1: answers[0],
-                    alt2: answers[1],
-                    alt3: answers[2],
-                };
+                return [correct, ...answers];
             });
         }
     }, [type, questionData]);
@@ -35,17 +27,51 @@ const QuestionForm = ({ type, quizId, questionData, onSubmit }) => {
     }
 
     function handleChangeAnswer(e) {
-        const { name, value } = e.target;
-        setAnswers(st => ({
-            ...st,
-            [name]: value,
-        }));
+        let currentAnswers = [...answers];
+        currentAnswers[e.target.id] = e.target.value;
+        setAnswers(currentAnswers);
+    }
+
+    function handleAddAnswer() {
+        if (answersLength < 5) {
+            setAnswers(st => st.push(''));
+            setAnswersLength(st => st + 1);
+        }
+    }
+
+    function handleRemoveAnswer(idx) {
+        if (answersLength > 3) {
+            setAnswers(st => st.filter((_, i) => i !== idx));
+            setAnswersLength(st => st - 1);
+        }
     }
 
     function handleSubmitQuestion(e) {
         e.preventDefault();
         onSubmit({ question, answers });
     }
+
+    const answersInputs = Array.from({ length: answersLength }).map((_, i) => (
+        <div key={`answer-${i}`} className={classes.FormGroup}>
+            <label htmlFor={`answer-${i}`}>
+                {i === 0 ? 'Correct Answer' : 'Incorrect Answer'}
+            </label>
+            <input
+                type='text'
+                name={`answer-${i}`}
+                id={i}
+                value={answers[i]}
+                onChange={handleChangeAnswer}
+            />
+            {i > 2 && (
+                <span
+                    className={classes.Delete}
+                    onClick={handleRemoveAnswer.bind(null, i)}>
+                    delete
+                </span>
+            )}
+        </div>
+    ));
 
     return (
         <div className={classes.QuestionCreate} onSubmit={handleSubmitQuestion}>
@@ -62,45 +88,14 @@ const QuestionForm = ({ type, quizId, questionData, onSubmit }) => {
                     />
                 </div>
                 <div className={classes.FormAnswers}>
-                    <div className={classes.FormGroup}>
-                        <label htmlFor='answer-correct'>Correct Answer</label>
-                        <input
-                            type='text'
-                            name='correct'
-                            value={answers.correct}
-                            onChange={handleChangeAnswer}
-                        />
-                    </div>
-                    <div className={classes.FormGroup}>
-                        <label htmlFor='answer-alt-1'>Incorrect Answer</label>
-                        <input
-                            type='text'
-                            name='alt1'
-                            id='answer-alt-1'
-                            value={answers.alt1}
-                            onChange={handleChangeAnswer}
-                        />
-                    </div>
-                    <div className={classes.FormGroup}>
-                        <label htmlFor='answer-alt-2'>Incorrect Answer</label>
-                        <input
-                            type='text'
-                            name='alt2'
-                            id='answer-alt-2'
-                            value={answers.alt2}
-                            onChange={handleChangeAnswer}
-                        />
-                    </div>
-                    <div className={classes.FormGroup}>
-                        <label htmlFor='answer-alt-3'>Incorrect Answer</label>
-                        <input
-                            type='text'
-                            name='alt3'
-                            id='answer-alt-3'
-                            value={answers.alt3}
-                            onChange={handleChangeAnswer}
-                        />
-                    </div>
+                    {answersInputs}
+                    {answersLength < 5 && (
+                        <div
+                            className={classes.AddAnswer}
+                            onClick={handleAddAnswer}>
+                            Add Addtional Answers
+                        </div>
+                    )}
                 </div>
                 <div className={classes.Actions}>
                     <Button theme='danger' link={`/questions/${quizId}/list`}>

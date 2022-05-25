@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 
+import axios from '../../helpers/with-axios';
 import { randomize } from '../../helpers/general-util';
 import CircleCheck from '../../assets/svg/circle-check-solid.svg';
 import classes from '../../styles/question/QuestionsOverview.module.scss';
@@ -11,6 +12,15 @@ const QuestionsOverview = ({ quiz }) => {
         router.push(`/questions/${id}/edit`);
     }
 
+    function handleDeleteQuestion(id) {
+        axios.delete(`/questions/${id}`).then(() => {
+            const questionEl = document.getElementById(id);
+            if (questionEl) {
+                questionEl.remove();
+            }
+        });
+    }
+
     return (
         <div className={classes.QuestionsOverview}>
             <div className={classes.Header}>{quiz.title}</div>
@@ -18,7 +28,10 @@ const QuestionsOverview = ({ quiz }) => {
                 <div className={classes.Title}>Quiz Questions Overview</div>
                 <ul className={classes.QuestionList}>
                     {quiz.questions.map((q, i) => (
-                        <li key={i} className={classes.QuestionItem}>
+                        <li
+                            key={q._id}
+                            id={q._id}
+                            className={classes.QuestionItem}>
                             <div className={classes.Question}>
                                 Q{i + 1}: {q.content}
                             </div>
@@ -31,7 +44,14 @@ const QuestionsOverview = ({ quiz }) => {
                                     )}>
                                     Edit
                                 </div>
-                                <div className={classes.Delete}>Delete</div>
+                                <div
+                                    className={classes.Delete}
+                                    onClick={handleDeleteQuestion.bind(
+                                        null,
+                                        q._id
+                                    )}>
+                                    Delete
+                                </div>
                             </div>
                             <ol className={classes.Answers}>
                                 {randomize(q.answers).map((answer, y) => (

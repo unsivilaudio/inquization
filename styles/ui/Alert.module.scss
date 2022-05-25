@@ -1,13 +1,17 @@
 .Alert {
     position: fixed;
+    width: 90%;
     top: 10%;
     left: 50%;
-    padding: 1rem 2rem;
-    width: 90%;
+    padding: 2.5rem 4.5rem;
     max-width: 90rem;
-    font-weight: bold;
+    font-family: 'Lato';
+    font-weight: 400;
     font-size: 2rem;
+    border-radius: var(--card-border-radius-lg);
+    box-shadow: var(--card-shadow-primary);
     transform: translateX(-50%);
+    animation: fadeaway 1s ease-out 2s forwards;
 
     &.Error {
         background: var(--color-alert-danger);
@@ -19,5 +23,14 @@
 
     &.Success {
         background: var(--color-alert-success);
+    }
+}
+
+@keyframes fadeaway {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }

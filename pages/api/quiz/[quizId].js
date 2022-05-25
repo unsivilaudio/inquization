@@ -29,7 +29,7 @@ export default async function useHandler(req, res) {
                 quiz,
             });
         case 'DELETE':
-            if (req.session.user.role !== 'edit') {
+            if (session.user.role !== 'edit') {
                 return res.status(403).json({
                     status: 'fail',
                     message: 'You are not allowed to do that.',

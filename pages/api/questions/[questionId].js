@@ -79,13 +79,15 @@ export default async function useHandler(req, res) {
                 });
             }
 
-            if (quiz.creator !== session.user.id) {
+            if (!quiz.creator.equals(session.user.id)) {
                 return res.status(403).json({
                     status: 'fail',
                     message: 'You do not have permission to do that.',
                 });
             }
 
+            quiz.questons = quiz.questions.filter(id => id !== question._id);
+            await quiz.save();
             await question.remove();
 
             return res.status(200).json({
