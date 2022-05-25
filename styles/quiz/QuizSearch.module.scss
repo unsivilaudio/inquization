@@ -31,21 +31,67 @@
                 letter-spacing: 0.3rem;
             }
 
-            select {
-                background: var(--card-bg);
-                border-radius: var(--card-border-radius);
+            .SelectWrapper {
+                background: var(--select-bg);
+                border-radius: var(--select-border-radius);
                 box-shadow: var(--card-shadow-primary);
-                border: none;
                 margin-top: 0.7rem;
-                font-size: inherit;
-                font-family: inherit;
-                padding: 0.7rem 1.5rem;
-                text-transform: capitalize;
-                text-align: center;
+                overflow: hidden;
+                position: relative;
 
-                option {
-                    text-align: center;
+                &::before,
+                &::after {
+                    content: '';
+                    pointer-events: none;
+                    position: absolute;
+                }
+
+                &::after {
+                    /*  Custom dropdown arrow */
+                    color: currentColor;
+                    content: '\25BC';
+                    height: 1em;
+                    font-size: 0.625em;
+                    line-height: 1;
+                    right: 1.2em;
+                    top: 50%;
+                    margin-top: -0.5em;
+                }
+
+                &::before {
+                    /*  Custom dropdown arrow cover */
+                    background: rgba(0, 0, 0, 0.15);
+                    width: 2em;
+                    right: 0;
+                    top: 0;
+                    bottom: 0;
+                    z-index: 2;
+                }
+
+                select {
+                    cursor: pointer;
+                    color: currentColor;
+                    background: transparent;
+                    border: none;
+                    margin: 0;
+                    font-size: inherit;
+                    font-family: inherit;
+                    padding: 0.7rem 1.5rem;
                     text-transform: capitalize;
+                    text-align: center;
+
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    text-indent: 0.01px;
+                    text-overflow: '';
+
+                    &::-ms-expand {
+                        display: none;
+                    }
+
+                    option {
+                        color: var(--body-text-dark);
+                    }
                 }
             }
         }

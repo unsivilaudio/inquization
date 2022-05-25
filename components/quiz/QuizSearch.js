@@ -38,25 +38,29 @@ function QuizSearch({ onSearch, onReset }) {
             <div className={classes.FormGroup}>
                 <div className={classes.Select}>
                     <label htmlFor='category'>Subject</label>
-                    <select
-                        id='category'
-                        onChange={handleChangeCategory}
-                        value={category}>
-                        <option value='all'>all</option>
-                        {categorySelects}
-                    </select>
+                    <div className={classes.SelectWrapper}>
+                        <select
+                            id='category'
+                            onChange={handleChangeCategory}
+                            value={category}>
+                            <option value='all'>all</option>
+                            {categorySelects}
+                        </select>
+                    </div>
                 </div>
                 <div className={classes.Select}>
                     <label htmlFor='difficulty'>difficulty</label>
-                    <select
-                        id='difficulty'
-                        onChange={handleChangeDifficulty}
-                        value={difficulty}>
-                        <option value='-'>-</option>
-                        <option value='easy'>Easy</option>
-                        <option value='medium'>Medium</option>
-                        <option value='hard'>Hard</option>
-                    </select>
+                    <div className={classes.SelectWrapper}>
+                        <select
+                            id='difficulty'
+                            onChange={handleChangeDifficulty}
+                            value={difficulty}>
+                            <option value='-'>-</option>
+                            <option value='easy'>Easy</option>
+                            <option value='medium'>Medium</option>
+                            <option value='hard'>Hard</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div className={classes.Actions}>
