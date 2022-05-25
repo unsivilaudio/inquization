@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import axios from '../../helpers/with-axios';
@@ -5,7 +6,9 @@ import { randomize } from '../../helpers/general-util';
 import CircleCheck from '../../assets/svg/circle-check-solid.svg';
 import classes from '../../styles/question/QuestionsOverview.module.scss';
 
-const QuestionsOverview = ({ quiz }) => {
+const QuestionsOverview = ({ quiz, currentUser }) => {
+    const [questions, setQuestions] = useState(quiz.questions);
+    const [answersShow, setAnswersShow] = useState([]);
     const router = useRouter();
 
     function handleEditQuestion(id) {
@@ -14,10 +17,16 @@ const QuestionsOverview = ({ quiz }) => {
 
     function handleDeleteQuestion(id) {
         axios.delete(`/questions/${id}`).then(() => {
-            const questionEl = document.getElementById(id);
-            if (questionEl) {
-                questionEl.remove();
+            setQuestions(q => q.filter(question => question._id !== id));
+        });
+    }
+
+    function toggleShowAnswers(id) {
+        setAnswersShow(st => {
+            if (st.includes(id)) {
+                return st.filter(x => x !== id);
             }
+            return [...st, id];
         });
     }
 
@@ -27,7 +36,7 @@ const QuestionsOverview = ({ quiz }) => {
             <div className={classes.Overview}>
                 <div className={classes.Title}>Quiz Questions Overview</div>
                 <ul className={classes.QuestionList}>
-                    {quiz.questions.map((q, i) => (
+                    {questions.map((q, i) => (
                         <li
                             key={q._id}
                             id={q._id}
@@ -37,37 +46,54 @@ const QuestionsOverview = ({ quiz }) => {
                             </div>
                             <div className={classes.Actions}>
                                 <div
-                                    className={classes.Edit}
-                                    onClick={handleEditQuestion.bind(
+                                    className={classes.ShowHide}
+                                    onClick={toggleShowAnswers.bind(
                                         null,
                                         q._id
                                     )}>
-                                    Edit
+                                    {answersShow.includes(q._id)
+                                        ? 'Hide Answers'
+                                        : 'Show Answers'}
                                 </div>
-                                <div
-                                    className={classes.Delete}
-                                    onClick={handleDeleteQuestion.bind(
-                                        null,
-                                        q._id
-                                    )}>
-                                    Delete
-                                </div>
+                                {currentUser?.role === 'edit' && (
+                                    <>
+                                        <div
+                                            className={classes.Edit}
+                                            onClick={handleEditQuestion.bind(
+                                                null,
+                                                q._id
+                                            )}>
+                                            Edit
+                                        </div>
+                                        <div
+                                            className={classes.Delete}
+                                            onClick={handleDeleteQuestion.bind(
+                                                null,
+                                                q._id
+                                            )}>
+                                            Delete
+                                        </div>
+                                    </>
+                                )}
                             </div>
                             <ol className={classes.Answers}>
-                                {randomize(q.answers).map((answer, y) => (
-                                    <li
-                                        key={`${i}-${y}`}
-                                        className={[
-                                            classes.AnswerItem,
-                                            q.answers[q.correctAnswer] ===
-                                            answer
-                                                ? classes.Correct
-                                                : '',
-                                        ].join(' ')}>
-                                        {answer}
-                                        <CircleCheck />
-                                    </li>
-                                ))}
+                                {randomize(q.answers).map((answer, y) => {
+                                    if (!answersShow.includes(q._id)) return;
+                                    return (
+                                        <li
+                                            key={`${i}-${y}`}
+                                            className={[
+                                                classes.AnswerItem,
+                                                q.answers[q.correctAnswer] ===
+                                                answer
+                                                    ? classes.Correct
+                                                    : '',
+                                            ].join(' ')}>
+                                            {answer}
+                                            <CircleCheck />
+                                        </li>
+                                    );
+                                })}
                             </ol>
                         </li>
                     ))}

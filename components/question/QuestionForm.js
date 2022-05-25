@@ -51,6 +51,10 @@ const QuestionForm = ({ type, quizId, questionData, onSubmit }) => {
 
     function handleSubmitQuestion(e) {
         e.preventDefault();
+        if (question === '' || answers.some(x => x === '')) {
+            return;
+        }
+
         onSubmit({ question, answers });
     }
 

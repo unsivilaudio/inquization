@@ -44,6 +44,7 @@
                     justify-content: flex-end;
                     gap: 1.5rem;
 
+                    .ShowHide,
                     .Edit,
                     .Delete {
                         padding: 0.7rem 1.4rem;
@@ -54,6 +55,13 @@
                         &:hover {
                             color: var(--color-white);
                             border-color: transparent;
+                        }
+                    }
+
+                    .ShowHide {
+                        &:hover {
+                            color: var(--body-text-dark);
+                            background: var(--color-white);
                         }
                     }
 

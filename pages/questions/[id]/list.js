@@ -12,7 +12,10 @@ const QuestionList = props => {
             <Head>
                 <title>Question List | The Great Inquization</title>
             </Head>
-            <QuestionsOverview quiz={props.quiz} />
+            <QuestionsOverview
+                quiz={props.quiz}
+                currentUser={props.currentUser}
+            />
             <div style={{ marginTop: '1.5rem' }}>
                 <Button link={`/questions/${props.quiz._id}/add`}>
                     Add A New Question
@@ -46,6 +49,7 @@ export async function getServerSideProps({ req, query }) {
     return {
         props: {
             quiz,
+            currentUser: session?.user || null,
         },
     };
 }
