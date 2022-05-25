@@ -16,10 +16,14 @@ const QuestionList = props => {
                 quiz={props.quiz}
                 currentUser={props.currentUser}
             />
-            <div style={{ marginTop: '1.5rem' }}>
-                <Button link={`/questions/${props.quiz._id}/add`}>
-                    Add A New Question
-                </Button>
+            <div
+                style={{ marginTop: '1.5rem', display: 'flex', gap: '1.5rem' }}>
+                {props.currentUser?.role === 'edit' && (
+                    <Button link={`/questions/${props.quiz._id}/add`}>
+                        Add A New Question
+                    </Button>
+                )}
+                <Button link='/quiz'>Go Back</Button>
             </div>
         </div>
     );
@@ -46,10 +50,11 @@ export async function getServerSideProps({ req, query }) {
         };
     }
     quiz = JSON.parse(JSON.stringify(quiz));
+    console.log(quiz.questions);
 
     if (session?.user?.role !== 'edit') {
-        quiz.questons.forEach(question => {
-            question.correctAnswer = undefined;
+        quiz.questions.forEach(question => {
+            delete question.correctAnswer;
         });
     }
 

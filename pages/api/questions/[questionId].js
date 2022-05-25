@@ -60,7 +60,7 @@ export default async function useHandler(req, res) {
 
             return res.status(200).json({
                 status: 'success',
-                message: 'successfully updated question',
+                message: 'Successfully updated question',
             });
         case 'DELETE':
             question = await Question.findById(questionId);
@@ -92,7 +92,7 @@ export default async function useHandler(req, res) {
 
             return res.status(200).json({
                 status: 'success',
-                message: 'successfully deleted question',
+                message: 'Successfully deleted question',
             });
         default:
             res.setHeader('Allow', ['PATCH', 'DELETE']);
