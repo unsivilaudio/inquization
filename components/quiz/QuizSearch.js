@@ -2,9 +2,11 @@ import { useState } from 'react';
 import Button from '../ui/Button';
 import classes from '../../styles/quiz/QuizSearch.module.scss';
 import subjects from '../../lib/subjects';
+import difficulties from '../../lib/difficulty';
+import Select from '../ui/Select';
 
 function QuizSearch({ onSearch, onReset }) {
-    const [category, setCategory] = useState(subjects[0].category);
+    const [category, setCategory] = useState(subjects[0].value);
     const [difficulty, setDifficulty] = useState('easy');
 
     function submitHandler(e) {
@@ -24,44 +26,26 @@ function QuizSearch({ onSearch, onReset }) {
         setDifficulty(e.target.value);
     }
 
-    const categorySelects = subjects.map(cat => (
-        <option key={cat.category} value={cat.category}>
-            {cat.label}
-        </option>
-    ));
-
     return (
         <form className={classes.QuizSearch} onSubmit={submitHandler}>
             <div className={classes.Title}>
                 Find A Quiz That's Right For You
             </div>
             <div className={classes.FormGroup}>
-                <div className={classes.Select}>
-                    <label htmlFor='category'>Subject</label>
-                    <div className={classes.SelectWrapper}>
-                        <select
-                            id='category'
-                            onChange={handleChangeCategory}
-                            value={category}>
-                            <option value='all'>all</option>
-                            {categorySelects}
-                        </select>
-                    </div>
-                </div>
-                <div className={classes.Select}>
-                    <label htmlFor='difficulty'>difficulty</label>
-                    <div className={classes.SelectWrapper}>
-                        <select
-                            id='difficulty'
-                            onChange={handleChangeDifficulty}
-                            value={difficulty}>
-                            <option value='-'>-</option>
-                            <option value='easy'>Easy</option>
-                            <option value='medium'>Medium</option>
-                            <option value='hard'>Hard</option>
-                        </select>
-                    </div>
-                </div>
+                <Select
+                    label='Category'
+                    name='category'
+                    options={subjects}
+                    onChange={handleChangeCategory}
+                />
+            </div>
+            <div className={classes.FormGroup}>
+                <Select
+                    label='Difficulty'
+                    name='difficulty'
+                    options={difficulties}
+                    onChange={handleChangeDifficulty}
+                />
             </div>
             <div className={classes.Actions}>
                 <Button type='submit'>Find Quiz</Button>

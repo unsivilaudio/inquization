@@ -4,6 +4,8 @@ import { getSession } from 'next-auth/react';
 
 import axios from '../../helpers/with-axios';
 import subjects from '../../lib/subjects';
+import difficulties from '../../lib/difficulty';
+import Select from '../../components/ui/Select';
 import Button from '../../components/ui/Button';
 import classes from '../../styles/pages/QuizCreate.module.scss';
 
@@ -65,31 +67,20 @@ function QuizCreate({ currentUser }) {
                     />
                 </div>
                 <div className={classes.FormGroup}>
-                    <label htmlFor='catagory'>Quiz Subject</label>
-                    <select
-                        type='text'
-                        name='catagory'
-                        required
-                        onChange={handleChangeCategory}
-                        value={category}>
-                        {subjects.map(cat => (
-                            <option key={cat.category} value={cat.category}>
-                                {cat.label}
-                            </option>
-                        ))}
-                    </select>
+                    <Select
+                        label='Difficulty'
+                        name='difficulty'
+                        options={difficulties}
+                        onChange={handleChangeDifficulty}
+                    />
                 </div>
                 <div className={classes.FormGroup}>
-                    <label htmlFor='difficulty'>Quiz Difficulty</label>
-                    <select
-                        type='text'
-                        name='difficulty'
-                        onChange={handleChangeDifficulty}
-                        value={difficulty}>
-                        <option value='easy'>Easy</option>
-                        <option value='medium'>Medium</option>
-                        <option value='hard'>Hard</option>
-                    </select>
+                    <Select
+                        label='Category'
+                        name='category'
+                        options={subjects}
+                        onChange={handleChangeCategory}
+                    />
                 </div>
                 <div className={classes.FormGroup}>
                     <label htmlFor='summary'>Quiz Summary</label>

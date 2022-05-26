@@ -55,6 +55,7 @@ export default async function useHandler(req, res) {
 
             question.content = req.body.question;
             question.answers = req.body.answers;
+            question.quizVersion = quiz.version;
 
             await question.save();
 

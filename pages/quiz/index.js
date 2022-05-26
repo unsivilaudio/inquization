@@ -10,7 +10,7 @@ import Head from 'next/head';
 function Quiz({ currentUser }) {
     const router = useRouter();
     const [quizItems, setQuizItems] = useState([]);
-    const [quizCategory, setQuizCategory] = useState('All');
+    const [quizCategory, setQuizCategory] = useState('all');
     const [quizDifficulty, setQuizDifficulty] = useState('-');
 
     useEffect(() => {

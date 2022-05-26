@@ -26,25 +26,15 @@
             label {
                 font-family: 'Lato';
                 font-size: 1.4rem;
-                font-weight: 600;
+                font-weight: 400;
+                text-transform: uppercase;
+                letter-spacing: 0.3rem;
             }
 
-            select,
             input,
             textarea {
                 margin-top: 1rem;
                 resize: vertical;
-            }
-
-            select {
-                cursor: pointer;
-                text-transform: capitalize;
-                &:focus-within {
-                    box-shadow: none;
-                }
-                option {
-                    text-transform: capitalize;
-                }
             }
         }
     }
